@@ -1,12 +1,11 @@
 import React from 'react'
 import { useLocalStorage } from './useLocalStorage'
 
-const TodoContext = React.createContext()
-
-function TodoProvider(props) {
+function useTodos() {
   const {
     item: todos,
     saveItem: saveTodos,
+    sincronizeItem: sincronizeTodos,
     loading,
     error,
   } = useLocalStorage('TODOS_V1', [])
@@ -63,42 +62,21 @@ function TodoProvider(props) {
     saveTodos(newTodos)
   }
 
-  /* Ejecutar codigo antes de renderizar el componente*/
-  // React.useEffect(() => {
-  //   console.log('use effect')
-  // }, [totalTodos])
-
-  /* Sin segundo parametro: se ejecuta el useEffect cada vez que se rederiza el componente */
-  /* [] array vacio: solo se renderiza la primera vez que se renderiza el componente */
-  /* [variable] array con alguna variable: se ejecuta el useEffect cada vez que esa variable cambia */
-
-  return (
-    /* Provider se utliza para envolver toda la aplicacion */
-    // todas las props que se quieran compartir, estaran en value
-    <TodoContext.Provider
-      value={{
-        loading,
-        error,
-        totalTodos,
-        completedTodos,
-        searchValue,
-        setSearchValue,
-        searchedTodos,
-        addTodo,
-        completeTodo,
-        deleteTodo,
-        openModal,
-        setOpenModal,
-      }}
-    >
-      {props.children}
-    </TodoContext.Provider>
-  )
+  return {
+    loading,
+    error,
+    totalTodos,
+    completedTodos,
+    searchValue,
+    setSearchValue,
+    searchedTodos,
+    addTodo,
+    completeTodo,
+    deleteTodo,
+    openModal,
+    setOpenModal,
+    sincronizeTodos,
+  }
 }
 
-export { TodoContext, TodoProvider }
-
-/* Consumer se utiliza en todas partes siempre que se necesite compartir el estado */
-{
-  /* <TodoContext.provider></TodoContext.provider> */
-}
+export { useTodos }

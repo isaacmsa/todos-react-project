@@ -1,9 +1,7 @@
 import React from 'react'
-import { TodoContext } from '../TodoContext'
 import './TodoSearch.css'
 
-function TodoSearch() {
-  const { searchValue, setSearchValue } = React.useContext(TodoContext)
+function TodoSearch({ loading, searchValue, setSearchValue }) {
   const onSearchValueChange = (event) => {
     console.log(event.target.value)
     setSearchValue(event.target.value)
@@ -11,9 +9,10 @@ function TodoSearch() {
   return (
     <input
       className="TodoSearch"
-      placeholder="Cebolla"
+      placeholder="todo"
       value={searchValue}
       onChange={onSearchValueChange}
+      disabled={loading}
     />
     // nota: react pide que el value del input debe estar conectado con el state,  es una convención de React, lo que llamamos “Componentes controlados”.
   )
